@@ -1,5 +1,6 @@
 package transactionManagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "transactionManagement")
@@ -16,6 +18,9 @@ public class TransactionConfig {
 
     @Bean
     public DataSource getDataSource() {
+        final Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("oracle.jdbc.driver.OracleDriver");
         dataSourceBuilder.url("jdbc:oracle:thin:@v-ind-db-sd-02m:1521:optymyze");
